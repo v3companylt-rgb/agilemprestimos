@@ -1,0 +1,21 @@
+CHECKOUT PIX — DUTTYFY (hospedagem comum)
+
+1) Abra api/config.php:
+   - DUTTYFY_PIX_URL_ENCRYPTED: já preenchida com a URL que você enviou.
+     Ela é a credencial: não publique, não coloque no HTML.
+   - AMOUNT_CENTS (2957 = R$ 29,57), PRODUCT_NAME e SUCCESS_URL (opcional).
+
+2) Envie TUDO para public_html (mantendo a pasta api e arquivos ocultos .htaccess):
+      index.html
+      api/ config.php  _lib.php  create-payment.php  status.php  .htaccess  _data/
+
+3) Requisitos: PHP 7.4+ e HTTPS. A pasta api/_data precisa ser gravável (permissão 755; 775 se der erro).
+
+4) Rastreamento: a página guarda a query string da URL do anúncio (utm_*, fbclid,
+   ttclid, click_id...) no localStorage e envia como campo "utm" à Duttyfy.
+   Se você usa uma página de entrada separada, coloque nela este trecho:
+      <script>try{var q=location.search.replace(/^\?/,"");if(q)localStorage.setItem("checkout_utm",q)}catch(e){}</script>
+   (só funciona se as duas páginas estiverem no mesmo domínio)
+
+Se a URL da Duttyfy deixar de funcionar (erro 401), gere outra no painel
+(Integrações e Chaves > API Keys > Gerar URL Criptografada) e troque em config.php.
